@@ -28,7 +28,7 @@ marineDeath=4;
 emissionRate=0.03; %we can change this
 %emissionRate=input('What is the emission Rate? ')
 
-years=10;
+years=100;
 %years=input('How many years should I simulate? ')
 
 for t = 2:years
@@ -49,3 +49,35 @@ terrestrialBiosphere
 oceanSurface
 deepOcean
 soil
+
+t = 1:1:years;
+subplot(3,2,1)
+plot(t,atmosphere(t))
+title('Atmosphere');
+xlabel('Year');
+ylabel('Amount');
+subplot(3,2,2)
+plot(t,terrestrialBiosphere(t))
+title('Terrestrial Biosphere');
+xlabel('Year');
+ylabel('Amount');
+subplot(3,2,3)
+plot(t,oceanSurface(t))
+title('Ocean Surface');
+xlabel('Year');
+ylabel('Amount');
+subplot(3,2,4)
+plot(t,deepOcean(t))
+title('Deep Ocean');
+xlabel('Year');
+ylabel('Amount');
+subplot(3,2,5)
+plot(t,soil(t))
+title('Soil');
+xlabel('Year');
+ylabel('Amount');
+subplot(3,2,6)
+plot(t,emissions(t))
+title('Emissions');
+xlabel('Year');
+ylabel('Amount');
