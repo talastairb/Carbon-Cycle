@@ -28,13 +28,15 @@ marineDeath=4;
 emissionRate=0.03; %we can change this
 %emissionRate=input('What is the emission Rate? ')
 
-years=10;
+years=500;
 %years=input('How many years should I simulate? ')
 
 for t = 2:years
-    %resovoir(t)=resovoir(t-1)
-    %-sourced flux proportions*previous reservoir value
-    %+sink flux proportions * previous reservoir value
+    %{
+    resovoir(t)=resovoir(t-1)
+    -sourced flux proportions*previous reservoir value
+    +sink flux proportions * previous reservoir value
+    %}
     
     atmosphere(t)=atmosphere(t-1)-terrestrialPhotosynthesis*atmosphere(t-1)-marinePhotosynthesis*atmosphere(t-1)-carbonDissolving*atmosphere(t-1)+terrestrialRespiration*terrestrialBiosphere(t-1)+marineRespiration*oceanSurface(t-1)+evaporation*oceanSurface(t-1)+plantDecay*soil(t-1)+deforestationRate*terrestrialBiosphere(t-1)+emissions(t-1);
     terrestrialBiosphere(t)=terrestrialBiosphere(t-1)-terrestrialRespiration*terrestrialBiosphere(t-1)-plantDeath*terrestrialBiosphere(t-1)-deforestationRate*terrestrialBiosphere(t-1)+terrestrialPhotosynthesis*atmosphere(t-1);
@@ -42,6 +44,7 @@ for t = 2:years
     deepOcean(t)=deepOcean(t-1)-upwelling*deepOcean(t-1)+downwelling*oceanSurface(t-1)+marineDeath;
     soil(t)=soil(t-1)-plantDecay*soil(t-1)+plantDeath*terrestrialBiosphere(t-1);
     emissions(t)=emissionRate*emissions(t-1)*(1-(emissions(t-1)/15));
+    temp(t)=.01*350*(atmosphere(t-1)-750)/750
 end %for loop
 
 atmosphere
@@ -49,35 +52,44 @@ terrestrialBiosphere
 oceanSurface
 deepOcean
 soil
+emissions
+temp
 
+
+ FigHandle = figure('Position', [0, 0, 900, 900]);
 t = 1:1:years;
-subplot(3,2,1)
+subplot(3,3,1)
 plot(t,atmosphere(t))
 title('Atmosphere');
 xlabel('Year');
 ylabel('Amount');
-subplot(3,2,2)
+subplot(3,3,2)
 plot(t,terrestrialBiosphere(t))
 title('Terrestrial Biosphere');
 xlabel('Year');
 ylabel('Amount');
-subplot(3,2,3)
+subplot(3,3,3)
 plot(t,oceanSurface(t))
 title('Ocean Surface');
 xlabel('Year');
 ylabel('Amount');
-subplot(3,2,4)
+subplot(3,3,4)
 plot(t,deepOcean(t))
 title('Deep Ocean');
 xlabel('Year');
 ylabel('Amount');
-subplot(3,2,5)
+subplot(3,3,5)
 plot(t,soil(t))
 title('Soil');
 xlabel('Year');
 ylabel('Amount');
-subplot(3,2,6)
+subplot(3,3,6)
 plot(t,emissions(t))
 title('Emissions');
 xlabel('Year');
 ylabel('Amount');
+subplot(3,3,7)
+plot(t,temp(t))
+title('Temperature');
+xlabel('Year');
+ylabel('Temp');
