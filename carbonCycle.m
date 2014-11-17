@@ -26,7 +26,7 @@ deforestationRate=1.15/terrestrialBiosphere(1);
 marineDeath=4;
 
 emissionRate=1.03; %we can change this
-%emissionRate=input('What is the emission Rate? ')
+%emissionRate=1+input('What is the emission Rate? (% from 0 to 100)')/100
 
 years=50;
 %years=input('How many years should I simulate? ')
