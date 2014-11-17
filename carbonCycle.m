@@ -28,7 +28,7 @@ marineDeath=4;
 emissionRate=0.03; %we can change this
 %emissionRate=input('What is the emission Rate? ')
 
-years=100;
+years=10;
 %years=input('How many years should I simulate? ')
 
 for t = 2:years
