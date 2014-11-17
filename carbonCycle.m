@@ -25,10 +25,10 @@ plantDecay=55/soil(1);
 deforestationRate=1.15/terrestrialBiosphere(1);
 marineDeath=4;
 
-emissionRate=0.03; %we can change this
+emissionRate=1.03; %we can change this
 %emissionRate=input('What is the emission Rate? ')
 
-years=500;
+years=50;
 %years=input('How many years should I simulate? ')
 
 for t = 2:years
@@ -44,7 +44,7 @@ for t = 2:years
     deepOcean(t)=deepOcean(t-1)-upwelling*deepOcean(t-1)+downwelling*oceanSurface(t-1)+marineDeath;
     soil(t)=soil(t-1)-plantDecay*soil(t-1)+plantDeath*terrestrialBiosphere(t-1);
     emissions(t)=emissionRate*emissions(t-1)*(1-(emissions(t-1)/15));
-    temp(t)=.01*350*(atmosphere(t-1)-750)/750
+    temp(t)=(atmosphere(t-1)-750)/.2
 end %for loop
 
 atmosphere
