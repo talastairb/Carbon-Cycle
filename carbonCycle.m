@@ -25,10 +25,10 @@ plantDecay=55/soil(1);
 deforestationRate=1.15/terrestrialBiosphere(1);
 marineDeath=4;
 
-emissionRate=1.03; %we can change this
-%emissionRate=1+input('What is the emission Rate? (% from 0 to 100)')/100
+emissionRate=.03; %we can change this
+%emissionRate=input('What is the emission Rate? (% from 0 to 100)')/100
 
-years=50;
+years=100;
 %years=input('How many years should I simulate? ')
 
 for t = 2:years
@@ -43,8 +43,8 @@ for t = 2:years
     oceanSurface(t)=oceanSurface(t-1)-marineRespiration*oceanSurface(t-1)-evaporation*oceanSurface(t-1)-downwelling*oceanSurface(t-1)-marineDeath+marinePhotosynthesis*atmosphere(t-1)+carbonDissolving*atmosphere(t-1)+upwelling*deepOcean(t-1);
     deepOcean(t)=deepOcean(t-1)-upwelling*deepOcean(t-1)+downwelling*oceanSurface(t-1)+marineDeath;
     soil(t)=soil(t-1)-plantDecay*soil(t-1)+plantDeath*terrestrialBiosphere(t-1);
-    emissions(t)=emissionRate*emissions(t-1)*(1-(emissions(t-1)/15));
-    temp(t)=(atmosphere(t-1)-750)/.2
+    emissions(t)=emissions(t-1)+emissionRate*emissions(t-1)*(1-(emissions(t-1)/15));
+    temp(t)=(atmosphere(t-1)-750)*.01*350/750
 end %for loop
 
 atmosphere
@@ -56,7 +56,7 @@ emissions
 temp
 
 
- FigHandle = figure('Position', [0, 0, 900, 900]);
+FigHandle = figure('Position', [0, 0, 900, 900]);
 t = 1:1:years;
 subplot(3,3,1)
 plot(t,atmosphere(t))
