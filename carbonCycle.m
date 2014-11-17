@@ -10,7 +10,10 @@ terrestrialBiosphere(1)=600;
 oceanSurface(1)=800;
 deepOcean(1)=38000;
 soil(1)=1500;
-emissions(1)=5; 
+
+%human affected emissions
+emissions(1)=5;
+deforestation(1)=0;
 
 %set values for each flux
 terrestrialPhotosynthesis=110/atmosphere(1);
@@ -27,9 +30,11 @@ deforestationRate=1.15/terrestrialBiosphere(1);
 marineDeath=4;
 
 emissionRate=.03; %we can change this
-%emissionRate=input('What is the emission Rate? (% from 0 to 100)')/100
+%emissionRate=input('What is the emission Rate? (% from 0 to 100)')/100 
 
-years=100;
+deforestationRate=0;
+
+years=200;
 %years=input('How many years should I simulate? ')
 
 for t = 2:years
@@ -59,38 +64,40 @@ temp
 
 FigHandle = figure('Position', [0, 0, 900, 900]);
 t = 1:1:years;
+rows=3;
+cols=3;
 
-subplot(3,3,1)
+subplot(rows,cols,1)
 plot(t,atmosphere(t))
 title('Carbon in Atmosphere');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
-subplot(3,3,2)
+subplot(rows,cols,2)
 plot(t,terrestrialBiosphere(t))
 title('Terrestrial Biosphere');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
-subplot(3,3,3)
+subplot(rows,cols,3)
 plot(t,oceanSurface(t))
 title('Ocean Surface');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
-subplot(3,3,4)
+subplot(rows,cols,4)
 plot(t,deepOcean(t))
 title('Deep Ocean');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
-subplot(3,3,5)
+subplot(rows,cols,5)
 plot(t,soil(t))
 title('Soil');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
-subplot(3,3,6)
+subplot(rows,cols,6)
 plot(t,emissions(t))
 title('Emissions');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
-subplot(3,3,7)
+subplot(rows,cols,7)
 plot(t,temp(t))
 title('Change in Temperature from Now');
 xlabel('Years from Now');
