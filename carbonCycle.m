@@ -90,6 +90,6 @@ xlabel('Year');
 ylabel('Amount');
 subplot(3,3,7)
 plot(t,temp(t))
-title('Temperature');
+title('Change in Temperature');
 xlabel('Year');
-ylabel('Temp');
+ylabel('Change in Temp(deg.C)');
