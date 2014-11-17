@@ -1,6 +1,7 @@
 %{
 Theodore Bastian
 tab111
+SAGES final project
 %}
 
 %set initial values for each reservoir
@@ -58,38 +59,39 @@ temp
 
 FigHandle = figure('Position', [0, 0, 900, 900]);
 t = 1:1:years;
+
 subplot(3,3,1)
 plot(t,atmosphere(t))
-title('Atmosphere');
-xlabel('Year');
-ylabel('Amount');
+title('Carbon in Atmosphere');
+xlabel('Years from Now');
+ylabel('Amount (Gt Carbon)');
 subplot(3,3,2)
 plot(t,terrestrialBiosphere(t))
 title('Terrestrial Biosphere');
-xlabel('Year');
-ylabel('Amount');
+xlabel('Years from Now');
+ylabel('Amount (Gt Carbon)');
 subplot(3,3,3)
 plot(t,oceanSurface(t))
 title('Ocean Surface');
-xlabel('Year');
-ylabel('Amount');
+xlabel('Years from Now');
+ylabel('Amount (Gt Carbon)');
 subplot(3,3,4)
 plot(t,deepOcean(t))
 title('Deep Ocean');
-xlabel('Year');
-ylabel('Amount');
+xlabel('Years from Now');
+ylabel('Amount (Gt Carbon)');
 subplot(3,3,5)
 plot(t,soil(t))
 title('Soil');
-xlabel('Year');
-ylabel('Amount');
+xlabel('Years from Now');
+ylabel('Amount (Gt Carbon)');
 subplot(3,3,6)
 plot(t,emissions(t))
 title('Emissions');
-xlabel('Year');
-ylabel('Amount');
+xlabel('Years from Now');
+ylabel('Amount (Gt Carbon)');
 subplot(3,3,7)
 plot(t,temp(t))
-title('Temperature');
-xlabel('Year');
-ylabel('Temp');
+title('Change in Temperature from Now');
+xlabel('Years from Now');
+ylabel('Degree Celcius');
