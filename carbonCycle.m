@@ -6,16 +6,19 @@ SAGES final project
 
 year=2012;
 print=0;
+customNumbers=0;
 
-emissionRate=.03;
-%emissionRate=input('What is the emission Rate? (% from 0 to 100) ')/100;
-
-deforestationRate=.15;
-%deforestationRate=input('What is the deforestation Rate? (% from 0 to 100) ')/100;
-
-years=23;
-%years=input('How many years should I simulate? ');
-
+if custonNumbers==0
+    emissionRate=.03;
+    deforestationRate=.15;
+    years=100;
+    
+elseif customNumbers==1
+    emissionRate=input('What is the emission Rate? (% from 0 to 100) ')/100;
+    deforestationRate=input('What is the deforestation Rate? (% from 0 to 100) ')/100;
+    years=input('How many years should I simulate? ');
+end
+    
 %set initial values for each reservoir
 atmosphere(1)=750;
 terrestrialBiosphere(1)=600;
