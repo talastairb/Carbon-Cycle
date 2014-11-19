@@ -1,15 +1,34 @@
 %{
 Theodore Bastian
 tab111
+SAGES final project
 %}
 
+year=2012;
+print=0;
+customNumbers=0;
+
+if custonNumbers==0
+    emissionRate=.03;
+    deforestationRate=.15;
+    years=100;
+    
+elseif customNumbers==1
+    emissionRate=input('What is the emission Rate? (% from 0 to 100) ')/100;
+    deforestationRate=input('What is the deforestation Rate? (% from 0 to 100) ')/100;
+    years=input('How many years should I simulate? ');
+end
+    
 %set initial values for each reservoir
 atmosphere(1)=750;
 terrestrialBiosphere(1)=600;
 oceanSurface(1)=800;
 deepOcean(1)=38000;
 soil(1)=1500;
-emissions(1)=5; 
+
+%human affected emissions
+emissions(1)=5;
+deforestation(1)=0;
 
 %set values for each flux
 terrestrialPhotosynthesis=110/atmosphere(1);
@@ -25,12 +44,6 @@ plantDecay=55/soil(1);
 deforestationRate=1.15/terrestrialBiosphere(1);
 marineDeath=4;
 
-emissionRate=.03; %we can change this
-%emissionRate=input('What is the emission Rate? (% from 0 to 100)')/100
-
-years=100;
-%years=input('How many years should I simulate? ')
-
 for t = 2:years
     %{
     resovoir(t)=resovoir(t-1)
@@ -44,52 +57,65 @@ for t = 2:years
     deepOcean(t)=deepOcean(t-1)-upwelling*deepOcean(t-1)+downwelling*oceanSurface(t-1)+marineDeath;
     soil(t)=soil(t-1)-plantDecay*soil(t-1)+plantDeath*terrestrialBiosphere(t-1);
     emissions(t)=emissions(t-1)+emissionRate*emissions(t-1)*(1-(emissions(t-1)/15));
-    temp(t)=(atmosphere(t-1)-750)*.01*350/750
+    deforestation(t)=deforestation(t-1);
+    temp(t)=(atmosphere(t-1)-750)*.01*350/750;
 end %for loop
 
+if print == 1
 atmosphere
 terrestrialBiosphere
 oceanSurface
 deepOcean
 soil
 emissions
+deforestation
 temp
+end
 
 
-FigHandle = figure('Position', [0, 0, 900, 900]);
+FigHandle = figure('Position', [0, 0, 1500, 900]);
 t = 1:1:years;
-subplot(3,3,1)
+rows=3;
+cols=3;
+
+subplot(rows,cols,1)
 plot(t,atmosphere(t))
-title('Atmosphere');
-xlabel('Year');
-ylabel('Amount');
-subplot(3,3,2)
+title('Carbon in Atmosphere');
+xlabel('Years from Now');
+ylabel('Amount (Gt Carbon)');
+
+subplot(rows,cols,2)
 plot(t,terrestrialBiosphere(t))
 title('Terrestrial Biosphere');
-xlabel('Year');
-ylabel('Amount');
-subplot(3,3,3)
+xlabel('Years from Now');
+ylabel('Amount (Gt Carbon)');
+
+subplot(rows,cols,3)
 plot(t,oceanSurface(t))
 title('Ocean Surface');
-xlabel('Year');
-ylabel('Amount');
-subplot(3,3,4)
+xlabel('Years from Now');
+ylabel('Amount (Gt Carbon)');
+
+subplot(rows,cols,4)
 plot(t,deepOcean(t))
 title('Deep Ocean');
-xlabel('Year');
-ylabel('Amount');
-subplot(3,3,5)
+xlabel('Years from Now');
+ylabel('Amount (Gt Carbon)');
+
+subplot(rows,cols,5)
 plot(t,soil(t))
 title('Soil');
-xlabel('Year');
-ylabel('Amount');
-subplot(3,3,6)
+xlabel('Years from Now');
+ylabel('Amount (Gt Carbon)');
+
+subplot(rows,cols,6)
 plot(t,emissions(t))
 title('Emissions');
-xlabel('Year');
-ylabel('Amount');
-subplot(3,3,7)
+xlabel('Years from Now');
+ylabel('Amount (Gt Carbon)');
+
+subplot(rows,cols,7)
 plot(t,temp(t))
 title('Change in Temperature');
-xlabel('Year');
-ylabel('Change in Temp(deg.C)');
+xlabel('Years from Now');
+ylabel('Change in Temperature (deg C)');
