@@ -4,6 +4,18 @@ tab111
 SAGES final project
 %}
 
+year=2012;
+print=0;
+
+emissionRate=.03; %we can change this
+%emissionRate=input('What is the emission Rate? (% from 0 to 100) ')/100;
+
+deforestationRate=.15;
+%deforestationRate=input('What is the deforestation Rate? (% from 0 to 100) ')/100;
+
+years=23;
+%years=input('How many years should I simulate? ');
+
 %set initial values for each reservoir
 atmosphere(1)=750;
 terrestrialBiosphere(1)=600;
@@ -29,14 +41,6 @@ plantDecay=55/soil(1);
 deforestationRate=1.15/terrestrialBiosphere(1);
 marineDeath=4;
 
-emissionRate=.03; %we can change this
-%emissionRate=input('What is the emission Rate? (% from 0 to 100)')/100 
-
-deforestationRate=0;
-
-years=200;
-%years=input('How many years should I simulate? ')
-
 for t = 2:years
     %{
     resovoir(t)=resovoir(t-1)
@@ -50,9 +54,10 @@ for t = 2:years
     deepOcean(t)=deepOcean(t-1)-upwelling*deepOcean(t-1)+downwelling*oceanSurface(t-1)+marineDeath;
     soil(t)=soil(t-1)-plantDecay*soil(t-1)+plantDeath*terrestrialBiosphere(t-1);
     emissions(t)=emissions(t-1)+emissionRate*emissions(t-1)*(1-(emissions(t-1)/15));
-    temp(t)=(atmosphere(t-1)-750)*.01*350/750
+    temp(t)=(atmosphere(t-1)-750)*.01*350/750;
 end %for loop
 
+if print == 1
 atmosphere
 terrestrialBiosphere
 oceanSurface
@@ -60,9 +65,10 @@ deepOcean
 soil
 emissions
 temp
+end
 
 
-FigHandle = figure('Position', [0, 0, 900, 900]);
+FigHandle = figure('Position', [0, 0, 1500, 900]);
 t = 1:1:years;
 rows=3;
 cols=3;
@@ -72,31 +78,37 @@ plot(t,atmosphere(t))
 title('Carbon in Atmosphere');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
+
 subplot(rows,cols,2)
 plot(t,terrestrialBiosphere(t))
 title('Terrestrial Biosphere');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
+
 subplot(rows,cols,3)
 plot(t,oceanSurface(t))
 title('Ocean Surface');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
+
 subplot(rows,cols,4)
 plot(t,deepOcean(t))
 title('Deep Ocean');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
+
 subplot(rows,cols,5)
 plot(t,soil(t))
 title('Soil');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
+
 subplot(rows,cols,6)
 plot(t,emissions(t))
 title('Emissions');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
+
 subplot(rows,cols,7)
 plot(t,temp(t))
 title('Change in Temperature from Now');
