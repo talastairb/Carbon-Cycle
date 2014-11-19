@@ -116,6 +116,6 @@ ylabel('Amount (Gt Carbon)');
 
 subplot(rows,cols,7)
 plot(t,temp(t))
-title('Change in Temperature from Now');
+title('Change in Temperature');
 xlabel('Years from Now');
-ylabel('Degree Celcius');
+ylabel('Change in Temperature (deg C)');
