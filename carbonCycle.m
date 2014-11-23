@@ -6,19 +6,36 @@ SAGES final project
 
 year=2012;
 print=0;
+
+
 customNumbers=1;
 
 if customNumbers==0
     emissionRate=.03;
-    deforestationRate=.15;
+    deforestationFlux=1.15;
     years=100;
     
 elseif customNumbers==1
     emissionRate=input('What is the emission Rate? (% from 0 to 100) ')/100;
-    deforestationRate=input('What is the deforestation Rate? (% from 0 to 100) ')/100;
+    deforestationFlux=input('What is the deforestation Flux? (in Gt of Carbon) ')/100;
     years=input('How many years should I simulate? ');
 end
+
+%{
+    emissionRate=.03;
+    deforestationFlux=1.15;
+    years=100;
     
+    static = uicontrol('Style', 'text', 'Position', [1 100 300 40], 'String', 'What is the emission Rate? (% from 0 to 100) ');
+    static = uicontrol('Style', 'text', 'Position', [1 100 300 40], 'String', 'What is the deforestation Flux? (in Gt of Carbon) ');
+    static = uicontrol('Style', 'text', 'Position', [1 100 300 40], 'String', 'How many years should I simulate? ');
+    editTextER = uicontrol('Style', 'edit', 'Position', [1 50 300 40]);
+    editTextDF = uicontrol('Style', 'edit', 'Position', [1 50 300 40]);
+    editTextY = uicontrol('Style', 'edit', 'Position', [1 50 300 40]);
+    button = uicontrol('Style', 'pushbutton', 'String', 'Add One', 'Position',[1 1 300 40], 'Callback', @update);
+    
+%}
+
 %set initial values for each reservoir
 atmosphere(1)=750;
 terrestrialBiosphere(1)=600;
@@ -41,7 +58,7 @@ upwelling=27/deepOcean(1);
 downwelling=23/oceanSurface(1);
 plantDeath=55/terrestrialBiosphere(1);
 plantDecay=55/soil(1);
-deforestationRate=1.15/terrestrialBiosphere(1);
+deforestationFlux=1.15/terrestrialBiosphere(1);
 marineDeath=4;
 
 for t = 2:years
@@ -51,13 +68,13 @@ for t = 2:years
     +sink flux proportions * previous reservoir value
     %}
     
-    atmosphere(t)=atmosphere(t-1)-terrestrialPhotosynthesis*atmosphere(t-1)-marinePhotosynthesis*atmosphere(t-1)-carbonDissolving*atmosphere(t-1)+terrestrialRespiration*terrestrialBiosphere(t-1)+marineRespiration*oceanSurface(t-1)+evaporation*oceanSurface(t-1)+plantDecay*soil(t-1)+deforestationRate*terrestrialBiosphere(t-1)+emissions(t-1);
-    terrestrialBiosphere(t)=terrestrialBiosphere(t-1)-terrestrialRespiration*terrestrialBiosphere(t-1)-plantDeath*terrestrialBiosphere(t-1)-deforestationRate*terrestrialBiosphere(t-1)+terrestrialPhotosynthesis*atmosphere(t-1);
+    atmosphere(t)=atmosphere(t-1)-terrestrialPhotosynthesis*atmosphere(t-1)-marinePhotosynthesis*atmosphere(t-1)-carbonDissolving*atmosphere(t-1)+terrestrialRespiration*terrestrialBiosphere(t-1)+marineRespiration*oceanSurface(t-1)+evaporation*oceanSurface(t-1)+plantDecay*soil(t-1)+deforestationFlux*terrestrialBiosphere(t-1)+deforestationFlux*deforestation(t-1)+emissions(t-1);
+    terrestrialBiosphere(t)=terrestrialBiosphere(t-1)-terrestrialRespiration*terrestrialBiosphere(t-1)-plantDeath*terrestrialBiosphere(t-1)-deforestationFlux*terrestrialBiosphere(t-1)-deforestationFlux*deforestation(t-1)+terrestrialPhotosynthesis*atmosphere(t-1);
     oceanSurface(t)=oceanSurface(t-1)-marineRespiration*oceanSurface(t-1)-evaporation*oceanSurface(t-1)-downwelling*oceanSurface(t-1)-marineDeath+marinePhotosynthesis*atmosphere(t-1)+carbonDissolving*atmosphere(t-1)+upwelling*deepOcean(t-1);
     deepOcean(t)=deepOcean(t-1)-upwelling*deepOcean(t-1)+downwelling*oceanSurface(t-1)+marineDeath;
     soil(t)=soil(t-1)-plantDecay*soil(t-1)+plantDeath*terrestrialBiosphere(t-1);
+
     emissions(t)=emissions(t-1)+emissionRate*emissions(t-1)*(1-(emissions(t-1)/15));
-    deforestation(t)=deforestation(t-1);
     temp(t)=(atmosphere(t-1)-750)*.01*350/750;
 end %for loop
 
@@ -72,8 +89,6 @@ deforestation
 temp
 end
 
-
-FigHandle = figure('Position', [0, 0, 1500, 900]);
 t = 1:1:years;
 rows=3;
 cols=3;
