@@ -28,7 +28,6 @@ soil(1)=1500;
 
 %human affected emissions
 emissions(1)=5;
-deforestation(1)=0;
 
 %set values for each flux
 terrestrialPhotosynthesis=110/atmosphere(1);
@@ -57,7 +56,6 @@ for t = 2:years
     deepOcean(t)=deepOcean(t-1)-upwelling*deepOcean(t-1)+downwelling*oceanSurface(t-1)+marineDeath;
     soil(t)=soil(t-1)-plantDecay*soil(t-1)+plantDeath*terrestrialBiosphere(t-1);
     emissions(t)=emissions(t-1)+emissionRate*emissions(t-1)*(1-(emissions(t-1)/15));
-    deforestation(t)=deforestation(t-1);
     temp(t)=(atmosphere(t-1)-750)*.01*350/750;
 end %for loop
 
@@ -68,7 +66,6 @@ oceanSurface
 deepOcean
 soil
 emissions
-deforestation
 temp
 end
 
