@@ -8,7 +8,7 @@ year=2012;
 print=0;
 customNumbers=0;
 
-if custonNumbers==0
+if customNumbers==0
     emissionRate=.03;
     deforestationRate=.15;
     years=100;
