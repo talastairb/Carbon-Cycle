@@ -9,12 +9,12 @@ print=0; %for debugging or deep data analysis.  will print all the arrays to the
 customNumbers=-1; %sets where the human affected numbers come from
 
 if customNumbers==0 %dont change these numbers
-    emissionRate=.03;%seriously don't even think about it
+    emissionRate=3/100;%seriously don't even think about it
     deforestationInit=1.15; %these are the default numbers
     years=100;%if you must change something, change this.  but don't.
     
 elseif customNumbers==-1 %if you want hardcoded numbers, put them here
-    emissionRate=.03;
+    emissionRate=3/100;
     deforestationInit=1.15;
     years=100;
     
