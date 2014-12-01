@@ -5,18 +5,24 @@ SAGES final project
 %}
 
 year=2012;
-print=0;
-customNumbers=0;
+print=0; %for debugging or deep data analysis.  will print all the arrays to the console
+customNumbers=-1; %sets where the human affected numbers come from
 
-if customNumbers==0
+if customNumbers==0 %dont change these numbers
+    emissionRate=.03;%seriously don't even think about it
+    deforestationInit=1.15; %these are the default numbers
+    years=100;%if you must change something, change this.  but don't.
+    
+elseif customNumbers==-1 %if you want hardcoded numbers, put them here
     emissionRate=.03;
-    deforestationRate=.15;
+    deforestationInit=1.15;
     years=100;
     
-elseif customNumbers==1
-    emissionRate=input('What is the emission Rate? (% from 0 to 100) ')/100;
-    deforestationRate=input('What is the deforestation Rate? (% from 0 to 100) ')/100;
+elseif customNumbers==1 %this option lets the user select their options
+    emissionRate=input('What is the emission Rate? (% increase per year) ')/100;
+    deforestationInit=input('What is the initial deforestation flux? (gT C per year)');
     years=input('How many years should I simulate? ');
+
 end
     
 %set initial values for each reservoir
@@ -27,7 +33,7 @@ deepOcean(1)=38000;
 soil(1)=1500;
 
 %human affected emissions
-emissions(1)=5;
+emissions(1)=5; %emissions rate changes from year to year
 
 %set values for each flux
 terrestrialPhotosynthesis=110/atmosphere(1);
@@ -40,7 +46,7 @@ upwelling=27/deepOcean(1);
 downwelling=23/oceanSurface(1);
 plantDeath=55/terrestrialBiosphere(1);
 plantDecay=55/soil(1);
-deforestationRate=1.15/terrestrialBiosphere(1);
+deforestationRate=deforestationInit/terrestrialBiosphere(1);
 marineDeath=4;
 
 for t = 2:years
@@ -70,10 +76,10 @@ temp
 end
 
 
-FigHandle = figure('Position', [0, 0, 1500, 900]);
-t = 1:1:years;
-rows=3;
-cols=3;
+FigHandle = figure('Position', [0, 0, 1500, 900]);%sets up the graphics window
+t = 1:1:years; %time array
+rows=3;%keep these the same
+cols=3;%they affect the layout of the graphs
 
 subplot(rows,cols,1)
 plot(t,atmosphere(t))
@@ -82,7 +88,7 @@ xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
 
 subplot(rows,cols,2)
-plot(t,terrestrialBiosphere(t))
+plot(t,terrestrialBiosphere(t),'g')
 title('Terrestrial Biosphere');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
@@ -100,7 +106,7 @@ xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
 
 subplot(rows,cols,5)
-plot(t,soil(t))
+plot(t,soil(t),'g')
 title('Soil');
 xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
@@ -112,7 +118,7 @@ xlabel('Years from Now');
 ylabel('Amount (Gt Carbon)');
 
 subplot(rows,cols,7)
-plot(t,temp(t))
+plot(t,temp(t),'r')
 title('Change in Temperature');
 xlabel('Years from Now');
 ylabel('Change in Temperature (deg C)');
