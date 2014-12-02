@@ -6,23 +6,24 @@ SAGES final project
 
 year=2012;
 print=0; %for debugging or deep data analysis.  will print all the arrays to the console
-customNumbers=-1; %sets where the human affected numbers come from
+customNumbers=1; %sets where the human affected numbers come from (default, hardcoded, or user inputted)
 
 if customNumbers==0 %dont change these numbers
     emissionRate=3/100;%seriously don't even think about it
     deforestationInit=1.15; %these are the default numbers
     years=100;%if you must change something, change this.  but don't.
+end
     
-elseif customNumbers==-1 %if you want hardcoded numbers, put them here
+if customNumbers==-1 %if you want hardcoded numbers, put them here
     emissionRate=3/100;
     deforestationInit=1.15;
     years=100;
+end
     
-elseif customNumbers==1 %this option lets the user select their options
+if customNumbers==1 %this option lets the user select their options
     emissionRate=input('What is the emission Rate? (% increase per year) ')/100;
     deforestationInit=input('What is the initial deforestation flux? (gT C per year)');
     years=input('How many years should I simulate? ');
-
 end
     
 %set initial values for each reservoir
