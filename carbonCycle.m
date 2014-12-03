@@ -4,27 +4,12 @@ tab111
 SAGES final project
 %}
 
-year=2012;
-print=0; %for debugging or deep data analysis.  will print all the arrays to the console
-customNumbers=1; %sets where the human affected numbers come from (default, hardcoded, or user inputted)
-
-if customNumbers==0 %dont change these numbers
-    emissionRate=3/100;%seriously don't even think about it
-    deforestationInit=1.15; %these are the default numbers
-    years=100;%if you must change something, change this.  but don't.
-end
-    
-if customNumbers==-1 %if you want hardcoded numbers, put them here
-    emissionRate=3/100;
-    deforestationInit=1.15;
-    years=100;
-end
-    
-if customNumbers==1 %this option lets the user select their options
+%set initial rates
     emissionRate=input('What is the emission Rate? (% increase per year) ')/100;
     deforestationInit=input('What is the initial deforestation flux? (gT C per year)');
+    
+%set number of years to run
     years=input('How many years should I simulate? ');
-end
     
 %set initial values for each reservoir
 atmosphere(1)=750;
@@ -34,7 +19,7 @@ deepOcean(1)=38000;
 soil(1)=1500;
 
 %human affected emissions
-emissions(1)=5; %emissions rate changes from year to year
+emissions(1)=5; %emissions rate changes from year to year based on the emissions rate
 
 %set values for each flux
 terrestrialPhotosynthesis=110/atmosphere(1);
@@ -66,22 +51,13 @@ for t = 2:years
     temp(t)=(atmosphere(t-1)-750)*.01*350/750;
 end %for loop
 
-if print == 1
-atmosphere
-terrestrialBiosphere
-oceanSurface
-deepOcean
-soil
-emissions
-temp
-end
+%sets up figure for plotting
+FigHandle = figure('Position', [0, 0, 1500, 900]);
+t = 1:1:years; 
+rows=3;
+cols=3;
 
-
-FigHandle = figure('Position', [0, 0, 1500, 900]);%sets up the graphics window
-t = 1:1:years; %time array
-rows=3;%keep these the same
-cols=3;%they affect the layout of the graphs
-
+%plots each array
 subplot(rows,cols,1)
 plot(t,atmosphere(t))
 title('Carbon in Atmosphere');
